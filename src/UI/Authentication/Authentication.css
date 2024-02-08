@@ -1,0 +1,17 @@
+/* RegestrationPage Css here */
+.sign-bg {
+    background-color: #2f2f2c !important;
+    color: white !important;
+    min-height: 90vh !important;
+  }
+.btn {
+    background-color: #fa0b77 !important;
+    font-weight: bolder!important;
+    color: white !important;
+    border: none !important;
+  }
+.btn:hover {
+    color: #fa0b77 !important;
+    background-color: #211f21 !important;
+  }
+  
