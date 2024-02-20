@@ -29,9 +29,8 @@ const Feed = () =>  {
     return (
         <div>
         <Header />
-        <div className="container-fluid pb-5">
-        <div className="container-fluid pt-5">
-          <div className="row pt-5 pb-2">
+        <div className="container-fluid pt-5 mt-5">
+          <div className="row pt5 pb-2">
             <div className="col-lg-3 m-auto mt-3 py-2 rounded shadow-lg position-fixed top-5 start-0">
               <h4 className="text-center">Connect</h4>
               <SearchUser/>
@@ -45,13 +44,12 @@ const Feed = () =>  {
                 <TweetCard data={item} key={item.id}/>
               ))}
             </div>
-            <div className="col-lg-3 m-auto mt-3 py-2 bg-dark text-white rounded shadow-lg position-fixed top-5 end-0">
+            <div className="col-lg-3 m-auto mt-3 py-2 rounded shadow-lg position-fixed top-5 end-0">
             <ShareTweetForm/>
             </div>
             
           </div>
           </div>   
-        </div>
         </div>
         )
 }

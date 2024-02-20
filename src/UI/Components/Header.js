@@ -19,7 +19,7 @@ const Header = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+      <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark py-3">
         <div className="container">
           <Link to="/" className="navbar-brand logo">
             AlmaXperience
@@ -43,7 +43,7 @@ const Header = () => {
                 <Link
                   to="/feed"
                   className={`nav-link ${
-                    activeLink === 'feed' ? 'active' : ''
+                    activeLink === 'feed' ? 'active px-3 mx-4 nav-link text-center nav-link':'px-3 mx-4 nav-link text-center nav-link'
                   }`}
                 >
                   FEED
@@ -53,7 +53,7 @@ const Header = () => {
                 <Link
                   to="/blog"
                   className={`nav-link ${
-                    activeLink === 'blog' ? 'active' : ''
+                    activeLink === 'blog' ? 'active px-3 mx-4 nav-link text-center nav-link':'px-3 mx-4 nav-link text-center nav-link'
                   }`}
                 >
                   BLOG
@@ -63,7 +63,7 @@ const Header = () => {
                 <Link
                   to="/launchpad"
                   className={`nav-link ${
-                    activeLink === 'launchpad' ? 'active' : ''
+                    activeLink === 'launchpad' ? 'active px-3 mx-4 nav-link text-center nav-link':'px-3 mx-4 nav-link text-center nav-link'
                   }`}
                 >
                   LAUNCHPAD
@@ -73,7 +73,7 @@ const Header = () => {
                 <Link
                   to="/profile"
                   className={`nav-link ${
-                    activeLink === 'profile' ? 'active' : ''
+                    activeLink === 'profile' ? 'active px-3 mx-4 nav-link text-center nav-link':'px-3 mx-4 nav-link text-center nav-link'
                   }`}
                 >
                   PROFILE
