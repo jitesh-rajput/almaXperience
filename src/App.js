@@ -1,12 +1,7 @@
 import ApplicationRoutes from "./Route/ApplicationRoutes";  
-import { initializeApp } from "firebase/app";
-import firebaseConfig from "./Firebase/Config";
-
-const app=initializeApp(firebaseConfig)
-console.log("Connected .......!")
-console.log(app)
-
+import { app } from "./Firebase/Config";
 function App() {
+  console.log(app);
   return (
     <div className="App">
       <ApplicationRoutes/>

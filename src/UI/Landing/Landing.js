@@ -1,15 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import './Landing.css';
-import profile from './img/profile.png'
-import graduate from './img/graduates.png'
-import scholarship from './img/scholarship.png'
 
 class Landing extends React.Component {
     render() {
       return(
       <div>
-
       <div className="container-fluide header">
         <div className="container">
           <nav className="navbar navbar-expand-lg navbar-dark ">

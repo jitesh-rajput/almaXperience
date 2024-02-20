@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Navigate } from 'react-router-dom';
 import './Authentication.css';
-//import CreateUser from "../../firebase/CreateUser";
+import DoSignUp from "../../Firebase/DoSignUp";
 import Alert from "../Components/Alert";
 
 class SignUp extends React.Component {
@@ -25,7 +25,7 @@ class SignUp extends React.Component {
           this.setState({error:"Password Must Be Same ..!"})
         }
         else{
-         // this.setState({error: await CreateUser(this.state)}) 
+         this.setState({error: await DoSignUp(this.state)}) 
         }
       }
 
