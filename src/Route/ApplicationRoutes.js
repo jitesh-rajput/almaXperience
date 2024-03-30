@@ -24,8 +24,8 @@ function ApplicationRoutes() {
         <Route path='*' element={<Landing/>} />
         <Route  path="/signup" element={<SignUp/>}  />
         <Route  path='/profile' element={<Profile/>}/> 
-        <Route path="/blog" element={<ProtectedRoute component={Blog}/>}/>
         <Route  path='/feed' element={<ProtectedRoute component={Feed}/>}/> 
+        <Route path="/blog" element={<ProtectedRoute component={Blog}/>}/>
         <Route  path='/blog/addBlog' element={<ProtectedRoute component={AddBlog}/>}/> 
         <Route  path='/blog/:id' element={<ProtectedRoute component={FullBlog}/>}/> 
         <Route  path='/launchpad' element={<ProtectedRoute component={Launchpad}/>}/> 

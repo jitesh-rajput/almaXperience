@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../Components/Header';
 import CardLayout from './CardLayout';
 import SearchBlog from './SearchBlog';
 import { data } from './data';
+
 const Blog = () => {
   console.log(data);
   return (

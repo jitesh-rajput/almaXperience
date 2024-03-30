@@ -39,7 +39,6 @@ const ShareTweetForm = () => {
             name="thought"
             value={formData.thought}
             onChange={handleInputChange}
-            className="text-white"
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formFile">

@@ -1,14 +1,15 @@
 import { db,storage ,auth} from './Config';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc,doc,updateDoc } from 'firebase/firestore';
 import { ResizeAndCompressImage } from './ResizeAndCompressImage';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 const UploadTweet = async (formData) => {
     try {
       const tweetData = {
+        id:'',
         uid:auth.currentUser.uid,
         thought: formData.thought,
         photoUrl: null,
-        likescount:0,
+        likes:[],
         comments:[],
         timestamp: new Date(),
       };
@@ -26,7 +27,11 @@ const UploadTweet = async (formData) => {
         tweetData.photoUrl=photoURL;
       }
       const docRef = await addDoc(collection(db, 'tweets'), tweetData);
-      console.log('Tweet uploaded successfully!');
+      console.log('Tweet uploaded successfully!'+docRef.id);
+      const tweetRef = doc(db, 'tweets', docRef.id);
+      await updateDoc(tweetRef, {
+        id:docRef.id
+      });
       return true;
     } catch (error) {
       console.error('Error uploading tweet:', error);

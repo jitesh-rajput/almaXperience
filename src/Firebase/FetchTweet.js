@@ -1,45 +1,116 @@
-import { db } from './Config';
-import { collection, getDocs, doc, getDoc, query, orderBy, limit } from 'firebase/firestore';
+import { db,auth } from './Config';
+import { collection, getDocs, doc, getDoc, query, orderBy, limit, startAfter,updateDoc,arrayRemove,arrayUnion } from 'firebase/firestore';
 
-export const fetchTweetsWithUserDetails = async (pageNumber = 1, pageSize = 30) => {
+const likeTweet = async (tweetId, userId) => {
   try {
-    // Query to fetch tweets sorted by time with pagination
-    const tweetsQuery = query(
-      collection(db, 'tweets'),
-      orderBy('timestamp', 'desc'), // Sort by timestamp in descending order
-      limit(pageSize), // Limit the number of tweets per page
-    );
+    const tweetRef = doc(db, 'tweets', tweetId);
+    await updateDoc(tweetRef, {
+      likes: arrayUnion(userId)
+    });
+    console.log('Tweet liked successfully');
+  } catch (error) {
+    console.error('Error liking tweet:', error);
+  }
+};
 
-    // Fetch tweets based on the query
+const unlikeTweet = async (tweetId, userId) => {
+  try {
+    const tweetRef = doc(db, 'tweets', tweetId);
+    await updateDoc(tweetRef, {
+      likes: arrayRemove(userId)
+    });
+    console.log('Tweet unliked successfully');
+  } catch (error) {
+    console.error('Error unliking tweet:', error);
+  }
+};
+
+const getTweetLikes = async (tweetId) => {
+  try {
+    const tweetRef = doc(db, 'tweets', tweetId);
+    const tweetSnapshot = await getDoc(tweetRef);
+    if (tweetSnapshot.exists()) {
+      const tweetData = tweetSnapshot.data();
+      const totalLikes = tweetData.likes ? tweetData.likes.length : 0;
+      const currentUserLiked = tweetData.likes ? tweetData.likes.includes(auth.currentUser.uid) : false;
+      return { totalLikes, currentUserLiked };
+    } else {
+      console.error('Tweet not found');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error getting tweet likes:', error);
+    return null;
+  }
+};
+
+
+export const fetchTweetsWithUserDetails = async (lastTimestamp = null, pageSize = 3) => {
+  try {
+    let tweetsQuery;
+    console.log("Calledddd ")
+    if (lastTimestamp) {
+      // If lastTimestamp is provided, start fetching tweets after that timestamp
+      tweetsQuery = query(
+        collection(db, 'tweets'),
+        orderBy('timestamp', 'desc'),
+        startAfter(lastTimestamp),
+        limit(pageSize)
+      );
+    } else {
+      // If lastTimestamp is not provided, fetch the initial set of tweets
+      tweetsQuery = query(
+        collection(db, 'tweets'),
+        orderBy('timestamp', 'desc'),
+        limit(pageSize)
+      );
+    }
+
     const tweetsSnapshot = await getDocs(tweetsQuery);
 
-    // Array to store tweets with user details
     const tweetsWithUserDetails = [];
 
-    // Iterate over each tweet document
     for (const tweetDoc of tweetsSnapshot.docs) {
-      // Get tweet data
       const tweetData = tweetDoc.data();
 
-      // Fetch user details based on UID
       const userDoc = await getDoc(doc(db, 'users', tweetData.uid));
       const userData = userDoc.data();
 
-      // Add user details to the tweet data
       const tweetWithUserDetails = {
         ...tweetData,
-        userProfilePhoto: userData.profile_pic, // Assuming profile photo is stored in 'profile_pic' field
-        username: userData.username, // Assuming username is stored in 'username' field
+        userProfilePhoto: userData.profile_pic,
+        username: userData.username,
       };
 
-      // Add tweet with user details to the array
       tweetsWithUserDetails.push(tweetWithUserDetails);
     }
 
-    // Return the array of tweets with user details
     return tweetsWithUserDetails;
   } catch (error) {
     console.error('Error fetching tweets with user details:', error);
-    return null; // Return null in case of error
+    return null;
   }
 };
+
+const commentSubmit = async (commentText,id,currentUser) => {
+  try {
+    console.log(currentUser);
+      // Ensure comment text is not empty
+      if (commentText.trim() === '') {
+          return;
+      }
+      // Update the comments array in Firestore
+      const tweetRef = doc(db, 'tweets', id);
+      await updateDoc(tweetRef, {
+          comments: arrayUnion({
+              userId: currentUser.uid,
+              text: commentText.trim(),
+          })
+      });
+      console.log('Comment added successfully');
+  } catch (error) {
+      console.error('Error adding comment:', error);
+  }
+};
+
+export{getTweetLikes,likeTweet,unlikeTweet,commentSubmit};

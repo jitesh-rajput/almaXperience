@@ -3,7 +3,7 @@ import Header from '../Components/Header';
 import { useParams } from 'react-router-dom';
 import { data } from './data';
 const FullBlog = () => {
-    const coments=null;
+  const coments=null;
   const [commentText, setCommentText] = useState('');
   const handleAddComment=()=>{
     console.log(commentText);
